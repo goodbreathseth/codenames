@@ -16,8 +16,6 @@ new Vue({
         this.turn = 'blue';
     },
     methods: {
-        // CURRENTLY: clicking on Done guessing doesn't enter the changeTurn method,
-        //             and trying to re-render tiles after clicking on them isn't working :(
         async getWords() {
             try {
                 let response = await axios.get("/getCards");
@@ -86,7 +84,8 @@ new Vue({
 
                 for (let i = 0; i < this.allCards.bystanderCards.length; i++) {
                     if (this.allCards.bystanderCards[i] == index) {
-                        return 'bg-gray-400'
+                        // return 'bg-gray-500'
+                        return 'bg-orange-300'
                     }
                 }
             }
@@ -116,9 +115,9 @@ new Vue({
         currentTurnColor: function() {
             console.log("entered currentTurnColor")
             if (this.turn == "blue")
-                return 'bg-blue-700'
+                return 'bg-blue-800'
             else
-                return 'bg-red-700'
+                return 'bg-red-800'
         },
     }, // End of computed
 })

@@ -40,24 +40,24 @@ new Vue({
       getCardColor: function(index) {
         
         if (index == this.allCards.assassin) {
-          return 'bg-black text-black'
+          return 'bg-black'
         }
         
         for (let i = 0; i < this.allCards.redCards.length; i++) {
           if (this.allCards.redCards[i] == index) {
-            return 'bg-red-700 text-red-700'
+            return 'bg-red-700'
           }
         }
         
         for (let i = 0; i < this.allCards.blueCards.length; i++) {
           if (this.allCards.blueCards[i] == index) {
-            return 'bg-blue-700 text-blue-700'
+            return 'bg-blue-700'
           }
         }
         
         for (let i = 0; i < this.allCards.bystanderCards.length; i++) {
           if (this.allCards.bystanderCards[i] == index) {
-            return 'bg-orange-200 text-orange-200'
+            return 'bg-orange-200'
           }
         }
       }, // End of getCardColor function

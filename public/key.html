@@ -9,43 +9,34 @@
 
 </head>
 <body class="">
-    <div id="keyApp" class="text-center bg-gray-900 w-screen h-screen flex items-center">
+    <div id="keyApp" class="text-center bg-gray-900 w-screen h-screen px-4 p-4 flex content-between flex-wrap select-none">
         <!--<img src="https://cf.geekdo-images.com/medium/img/Ik_7CzT0b88EjL8MsZ4eTW8CLbI=/fit-in/500x500/filters:no_upscale()/pic2654543.png" alt="">-->
         <div class="w-3/4 mx-auto">
-            <div :class="getCardColor(index)" class="shadow inline-block lg:py-4 h-12 m-1 rounded w-1/6" v-for="(card, index) in allCards.all">
+            <div :class="getCardColor(index)" class="shadow text-transparent inline-block lg:py-4 h-12 m-1 rounded w-1/6 " v-for="(card, index) in allCards.all">
                 <p class="-mb-2 -mt-1">{{ card }}</p> 
                 <p class="-my-2 shadow-inner">{{ card }}</p> 
             </div>
         </div>
         
-        <div class="mt-2 flex justify-between text-sm">
-            <!--<div>-->
-            <!--    <div class="inline-block bg-red-900 px-2 py-1 text-white">-->
-            <!--        Red cards left: {{ redCardsLeft }}-->
-            <!--    </div>-->
-            <!--    <div class="inline-block bg-blue-900 px-2 py-1 text-white">-->
-            <!--        Blue cards left: {{ blueCardsLeft }}-->
-            <!--    </div>-->
-            <!--</div>-->
+        
+        
+        <div class="w-full mt-2 flex justify-between text-sm">
             
-            <!--<div class="text-white py-1">-->
-            <!--    <hr>-->
-            <!--    Spymaster url: <a href="http://3.19.53.165:4204/key">3.19.53.165:4204/key</a>-->
-            <!--    <hr>-->
-            <!--</div>-->
-            
-            <!--<div class="bg-gray-200 rounded text-sm px-3 py-1" @click="changeTurn">-->
-            <!--    Done guessing-->
-            <!--</div>-->
-            
-            <div class="h-8 px-4 bg-gray-300 m-4 rounded" @click="getNewKeyCard()">New card</div>
-            <div class="h-8 px-4 bg-gray-300 m-4 rounded">First team: red</div>
+            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="getNewKeyCard()">New card</div>
+            <div class="text-white py-1">
+                <hr>
+                <a href="https://github.com/goodbreathseth/codenames">Github</a>
+                <hr>
+            </div>
+            <div class="text-white py-1">
+                <hr>
+                <a href="http://3.19.53.165:4204/">Return to game</a>
+                <hr>
+            </div>
+            <div class="bg-gray-200 rounded text-sm px-3 py-1">First team: red</div>
             
         </div>
         
-        <!--<div class="h-8 px-4 bg-gray-300 absolute bottom-0 left-0 m-4 rounded" @click="getNewKeyCard()">New card</div>-->
-        <!--<div class="h-8 px-4 bg-gray-300 absolute bottom-0 right-0 m-4 rounded">First team: red</div>-->
-
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
