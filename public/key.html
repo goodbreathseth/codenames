@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spymaster key</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body class="bg-gray-900">
+    <div id="keyApp" class="text-center">
+        <!--<img src="https://cf.geekdo-images.com/medium/img/Ik_7CzT0b88EjL8MsZ4eTW8CLbI=/fit-in/500x500/filters:no_upscale()/pic2654543.png" alt="">-->
+        <div class="w-3/4 mx-auto mt-10">
+            <div :class="getCardColor(index)" class="shadow inline-block lg:py-4 h-12 m-1 rounded w-1/6" v-for="(card, index) in allCards.all">
+                <p class="-mb-2 -mt-1">{{ card }}</p> 
+                <p class="-my-2 shadow-inner">{{ card }}</p> 
+            </div>
+        </div>
+        
+        <div class="h-8 px-4 bg-gray-300 absolute bottom-0 left-0 m-4 rounded" @click="getNewKeyCard()">New card</div>
+        <div class="h-8 px-4 bg-gray-300 absolute bottom-0 right-0 m-4 rounded">First team: red</div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="javascripts/keyScript.js"></script>
+</body>
+</html>
