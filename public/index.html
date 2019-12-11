@@ -12,15 +12,17 @@
     </style>
 </head>
 <body>
-    <div id="app" class="text-center text-2xl w-screen h-screen p-6" :class="currentTurnColor">
+    <div id="app" class="text-center text-2xl w-screen h-screen px-4 pt-1" :class="currentTurnColor">
         <h1 class="hidden lg:block text-6xl text-white m-8">Codenames</h1>
-        <div class="shadow-inner p-1 lg:p-8 bg-gray-100 lg:w-5/6 lg:mx-auto rounded">
+        <div class="shadow mx-auto p-1 lg:p-8 bg-gray-100 lg:w-5/6 lg:mx-auto rounded">
             
             <!-- This outer div is used to format the amount of cards to display in a row -->
             <div class="">
-                <div class="shadow inline-block border m-1 py-2 lg:py-4 rounded w-1/6 bg-orange-200" v-for="(card, index) in words" @click="cardSelected(index)">
+                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 " :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
+                    <!--<template v-if="touchedCards[index]">-->
                     <div v-if="isCardTouched(index)">
-                        Hello
+                        <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
+                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
                     </div>
                     <div v-else>
                         <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
@@ -31,11 +33,32 @@
 
         </div>
         
+        <div class="mt-2 flex justify-between text-sm">
+            <div>
+                <div class="inline-block bg-red-900 px-2 py-1 text-white">
+                    Red cards left: {{ redCardsLeft }}
+                </div>
+                <div class="inline-block bg-blue-900 px-2 py-1 text-white">
+                    Blue cards left: {{ blueCardsLeft }}
+                </div>
+            </div>
+            
+            <div class="text-white py-1">
+                <hr>
+                Spymaster url: <a href="http://3.19.53.165:4204/key">3.19.53.165:4204/key</a>
+                <hr>
+            </div>
+            
+            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="changeTurn">
+                Done guessing
+            </div>
+            
+        </div>
+        
         <!--<div class="w-full bg-black h-20 p-2">-->
         <!--    <div class="bg-blue-700 rounded w-24 h-16 absolute z-10">-->
         <!--</div>-->
             
-        </div>
 
         <!--<div class="bg-gray-200 rounded absolute bottom-0 left-0 px-3 lg:p-4 m-2 flex content-center">-->
         <!--    <div :class="getColor()" class="w-12 h-12 inline-block mr-4 my-auto"></div>-->
@@ -45,9 +68,6 @@
         <!--    </div>-->
         <!--</div>-->
 
-        <div class="bg-gray-200 rounded absolute bottom-0 right-0 p-5 m-2 flex content-center" @click="changeTurn">
-            <p class="inline-block">Done guessing</p>
-        </div>
         
         
         <!--<div class="fixed bottom-0 bg-white w-full">-->
