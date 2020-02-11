@@ -29,8 +29,6 @@ new Vue({
             try {
                 let response = await axios.get("/api/getCards");
                 this.allCards = response.data;
-                console.log("got cards:");
-                console.log(this.allCards);
                 return true;
             }
             catch (error) {
@@ -39,7 +37,7 @@ new Vue({
         },
         cardSelected: function(index) {
             if (this.touchedCards[index] == false) {
-            
+
                 Vue.set(this.touchedCards, index, true)
                 let variableChanged = false;
                 let tempRedCards = 9;
@@ -48,17 +46,17 @@ new Vue({
                         this.redCardsLeft--;
                     }
                 }
-               
+
                 variableChanged = false;
                 let tempBlueCards = 8;
                 for (let i = 0; i < this.allCards.blueCards.length; i++) {
                     if (this.allCards.blueCards[i] == index) {
                         this.blueCardsLeft--;
                     }
-                }    
+                }
             }
-            
-            
+
+
             // console.log("Card " + this.words[index] + " was clicked");
         },
         isCardTouched: function(index) {
@@ -67,6 +65,8 @@ new Vue({
         getCardColor: function(index) {
             if (this.touchedCards[index]) {
                 if (index == this.allCards.assassin) {
+                    setTimeout(() => window.confirm("Game over!"), 3000);
+
                     return 'bg-black'
                 }
 
@@ -113,7 +113,6 @@ new Vue({
     }, // End of methods
     computed: {
         currentTurnColor: function() {
-            console.log("entered currentTurnColor")
             if (this.turn == "blue")
                 return 'bg-blue-800'
             else

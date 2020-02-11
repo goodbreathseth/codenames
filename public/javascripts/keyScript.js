@@ -12,16 +12,11 @@ new Vue({
     beforeMount: function() {
       this.getCards()
     },
-    mounted: function() {
-      console.log("mounted");
-    },
     methods: {
       async getCards() {
         try {
           let response = await axios.get("/api/getCards");
           this.allCards = response.data;
-          console.log("got cards:");
-          console.log(this.allCards);
           return true;
         } catch (error) {
           console.log(error);
@@ -31,6 +26,17 @@ new Vue({
         try {
           let response = await axios.get("/api/getNewKeyCard");
           this.allCards = response.data;
+          return true;
+          
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      
+      async getRandomCardsFromDeck() {
+        try {
+          let response = await axios.put("api/pullRandomCardsFromDeck");
+          window.alert("Cards refreshed");
           return true;
           
         } catch (error) {

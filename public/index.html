@@ -13,24 +13,22 @@
 </head>
 <body>
     <div id="app" class="text-center text-2xl w-screen h-screen px-4 p-2 flex content-between flex-wrap select-none" :class="currentTurnColor">
-        <h1 class="hidden lg:block text-6xl text-white m-8">Codenames</h1>
+        <h1 class="text-center hidden lg:block text-6xl text-white m-6">Codenames</h1>
         <div class="shadow mx-auto p-1 lg:p-8 bg-gray-100 lg:w-5/6 lg:mx-auto rounded">
             
             <!-- This outer div is used to format the amount of cards to display in a row -->
             <div class="">
                 <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow-inner" :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
-                    <!--<template v-if="touchedCards[index]">-->
                     <div v-if="isCardTouched(index)">
                         <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
                         <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
                     </div>
                     <div v-else>
                         <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
-                        <p class="-my-2 text-gray-800 shadow-inner">{{ card }}</p> 
+                        <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
                     </div>
                 </div>
             </div>
-
         </div>
         
         <div class="w-full mt-2 flex justify-between text-sm">
@@ -50,7 +48,6 @@
             <div class="bg-gray-200 rounded text-sm px-3 py-1 shadow" @click="changeTurn">
                 Done guessing
             </div>
-            
         </div>
         
     </div>
