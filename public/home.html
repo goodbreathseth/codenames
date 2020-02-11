@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Codenames</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="app" class="text-center w-screen h-screen px-4 p-2 flex content-between flex-wrap select-none bg-blue-900">
+    <h1 class="hidden lg:block text-6xl text-white m-8 text-center mx-auto font-bold">CODENAMES</h1>
+    <div class="p-1 lg:p-8 lg:w-5/6 lg:mx-auto rounded text-4xl text-white" style="height: 20%">
+        <h1 class="inline-block">Teams:</h1>
+        <div class="inline-block mx-auto box-content">
+            <h2 class="inline-block pl-8 pr-2">Blue</h2>
+            <button class="border-8 border-blue-500 inline-block rounded" id="blue-team" name="team" value="blue"></button>
+        </div>
+        <div class="mx-auto my-auto inline-block">
+            <h2 class="inline-block pl-8 pr-2">Red</h2>
+            <button class="border-8 border-red-500 inline-block rounded" id="red-team" name="team" value="red"></button>
+        </div>
+    </div>
+
+    <div id="player-type" class="mx-auto p-1 lg:p-8 lg:w-5/6 lg:mx-auto rounded" style="height: 45%">
+        <div class="pr-8 inline-block">
+            <button id="spymaster" type="button" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Spymaster</button>
+        </div>
+        <div class="pl-8 inline-block">
+            <button id="player" type="button" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Player</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

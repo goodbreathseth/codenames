@@ -43,7 +43,7 @@ router.get('/api/getCards', async (req, res) => {
         blueCards: blueCards,
         bystanderCards: bystanderCards,
         assassin: assassin
-    }
+    };
     res.send(items);
   } catch (error) {
     console.log(error);
@@ -61,7 +61,7 @@ router.get("/api/getNewKeyCard", async (req, res) => {
             blueCards: blueCards,
             bystanderCards: bystanderCards,
             assassin: assassin
-        }
+        };
         res.send(items);
         
    } catch (error) {
