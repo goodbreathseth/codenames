@@ -39,23 +39,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// let words = [ 
-//     "apple", "carrot", "bread", "egg", "car", "bus", "hot dog", "pickle", "card",
-//     "sun", "moon", "cheese", "computer", "shoes", "guitar", "shirt", "toe", "chair", "blanket", "hand"
-// ];
-
-// let key = "https://cf.geekdo-images.com/medium/img/Ik_7CzT0b88EjL8MsZ4eTW8CLbI=/fit-in/500x500/filters:no_upscale()/pic2654543.png";
-
-
-// app.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname+'/public/index.html'));
-// });
-
-// app.get("/getCards", (req, res) => {
-//     res.send(words);
-// });
-
-// app.get("/key", (req, res) => {
-//     res.sendFile(path.join(__dirname+'/public/key.html'));
-// });
