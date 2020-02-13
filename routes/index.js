@@ -22,9 +22,9 @@ router.get("/getCards", (req, res) => {
     res.send(wordsForGame);
 });
 
-router.get("/key", (req, res) => {
+router.get("/spymasterBoard", (req, res) => {
     let filePath = path.join(__dirname, "../public/")
-    res.sendFile(filePath + '/key.html');
+    res.sendFile(filePath + '/spymasterBoard.html');
 });
 
 

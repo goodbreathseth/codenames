@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Codenames</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="gameBoardApp" class="text-center text-2xl w-screen h-screen px-4 p-2 flex content-between flex-wrap select-none" :class="currentTurnColor">
+        <h1 class="text-center hidden lg:block text-6xl text-white m-6">Codenames</h1>
+        <div class="shadow mx-auto p-1 lg:p-8 bg-gray-100 lg:w-5/6 lg:mx-auto rounded">
+            
+            <!-- This outer div is used to format the amount of cards to display in a row -->
+            <div class="">
+                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow-inner" :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
+                    <div v-if="isCardTouched(index)">
+                        <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
+                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
+                    </div>
+                    <div v-else>
+                        <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
+                        <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full mt-2 flex justify-between text-sm">
+            <div>
+                <div class="inline-block bg-red-900 px-2 py-1 mr-2 text-white shadow-outline">
+                    Red cards left: {{ redCardsLeft }}
+                </div>
+                <div class="inline-block bg-blue-900 px-2 py-1 text-white shadow-outline">
+                    Blue cards left: {{ blueCardsLeft }}
+                </div>
+            </div>
+            
+            <div class="text-white py-1">
+                <hr><a href="./key.html">Spymaster url: 3.19.53.165:4204/key</a><hr>
+            </div>
+            
+            <div class="bg-gray-200 rounded text-sm px-3 py-1 shadow" @click="changeTurn">
+                Done guessing
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="javascripts/script.js"></script>
+</body>
+</html>
