@@ -11,25 +11,14 @@
 <body class="">
     <div id="spymasterApp" class="text-center bg-gray-900 w-screen h-screen px-4 p-4 flex content-between flex-wrap select-none">
         <div class="w-3/4 mx-auto lg:mt-20">
-            <div :class="getCardColor(index)" class="shadow text-transparent inline-block lg:py-4 h-12 m-1 rounded w-1/6 " v-for="(card, index) in allCards.all">
+            <div :class="getCardColor(index)" class="shadow text-transparent inline-block lg:py-4 h-12 m-1 rounded w-1/6 " v-for="(card, index) in words">
                 <p class="-mb-2 -mt-1">{{ card }}</p> 
                 <p class="-my-2 shadow-inner">{{ card }}</p> 
             </div>
         </div>
         
         <div class="w-full mt-2 flex justify-between text-sm">
-            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="getRandomCardsFromDeck()">Reset words</div>
-            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="getNewKeyCard()">New key</div>
-            <!--<div class="text-white py-1">-->
-            <!--    <hr>-->
-            <!--    <a href="https://github.com/goodbreathseth/codenames">Github</a>-->
-            <!--    <hr>-->
-            <!--</div>-->
-            <div class="text-white py-1">
-                <hr>
-                <a href="./index.html">Return to game</a>
-                <hr>
-            </div>
+            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="getNewGame()">New Game</div>
             <div class="bg-gray-200 rounded text-sm px-3 py-1">First team: red</div>
         </div>
         

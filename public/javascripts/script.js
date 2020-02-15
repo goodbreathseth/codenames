@@ -4,13 +4,14 @@ let indexApp = new Vue({
         team: null,
     },
     watch: {
-        team: function() {
+        team: function () {
             gameBoardApp.team = this.team;
             spymasterApp.team = this.team
         }
     }
 })
 
+let currentTurn = null;
 
 let gameBoardApp = new Vue({
     el: '#gameBoardApp',
@@ -24,68 +25,52 @@ let gameBoardApp = new Vue({
         blueCardsLeft: 8,
         team: null,
     },
-    beforeMount: function() {
-        this.getWords();
-        this.getCards();
-        this.touchedCards = new Array(25).fill(false);
+    created: function () {
+        this.getGame();
         this.turn = 'blue';
     },
-    watch: {
-        team: function() {
-            console.log("team changed in gameboardapp")
-        }
-    },
     methods: {
-        async getWords() {
+        async getGame() {
             try {
-                let response = await axios.get("/getCards");
-                this.words = response.data;
-            }
-            catch (error) {
+                let response = await axios.get("/api/getGame")
+                this.words = response.data.words;
+                this.allCards = response.data.allCards;
+                this.touchedCards = response.data.touchedCards;
+            } catch (error) {
                 console.log(error);
             }
         },
-        async getCards() {
-            try {
-                let response = await axios.get("/api/getCards");
-                this.allCards = response.data;
-                return true;
-            }
-            catch (error) {
-                console.log(error);
-            }
-        },
-        cardSelected: function(index) {
+        async cardSelected(index) {
             if (this.touchedCards[index] == false) {
+                try {
+                    let response = await axios.post("/api/cardSelected", {
+                        index
+                    });
 
-                Vue.set(this.touchedCards, index, true)
-                let variableChanged = false;
-                let tempRedCards = 9;
-                for (let i = 0; i < this.allCards.redCards.length; i++) {
-                    if (this.allCards.redCards[i] == index) {
-                        this.redCardsLeft--;
+                    Vue.set(this.touchedCards, index, true)
+                    for (let i = 0; i < this.allCards.redCards.length; i++) {
+                        if (this.allCards.redCards[i] == index) {
+                            this.redCardsLeft--;
+                        }
                     }
-                }
-
-                variableChanged = false;
-                let tempBlueCards = 8;
-                for (let i = 0; i < this.allCards.blueCards.length; i++) {
-                    if (this.allCards.blueCards[i] == index) {
-                        this.blueCardsLeft--;
+                    for (let i = 0; i < this.allCards.blueCards.length; i++) {
+                        if (this.allCards.blueCards[i] == index) {
+                            this.blueCardsLeft--;
+                        }
                     }
+                    
+                } catch (error) {
+                    console.log(error)
                 }
             }
-
-
-            // console.log("Card " + this.words[index] + " was clicked");
         },
-        isCardTouched: function(index) {
+        isCardTouched: function (index) {
             return this.touchedCards[index];
         },
-        getCardColor: function(index) {
+        getCardColor: function (index) {
             if (this.touchedCards[index]) {
                 if (index == this.allCards.assassin) {
-                    setTimeout(() => window.confirm("Game over!"), 3000);
+                    setTimeout(() => window.confirm("Game over!"), 300);
 
                     return 'bg-black'
                 }
@@ -113,7 +98,7 @@ let gameBoardApp = new Vue({
                 return 'bg-orange-200'
             }
         },
-        changeTurn: function() {
+        changeTurn: function () {
             console.log("changed turn")
             if (this.turn == "blue") {
                 this.turn = "red";
@@ -122,7 +107,7 @@ let gameBoardApp = new Vue({
                 this.turn = "blue";
             }
         },
-        getColor: function() {
+        getColor: function () {
             if (this.turn == "blue") {
                 return "bg-blue-700";
             }
@@ -132,7 +117,7 @@ let gameBoardApp = new Vue({
         },
     }, // End of methods
     computed: {
-        currentTurnColor: function() {
+        currentTurnColor: function () {
             if (this.turn == "blue")
                 return 'bg-blue-800'
             else
@@ -144,78 +129,80 @@ let gameBoardApp = new Vue({
 let spymasterApp = new Vue({
     el: '#spymasterApp',
     data: {
-      allCards: {},
-      redCards: [],
-      blueCards: [],
-      bystanderCards: [],
-      assassin: -1,
-      turn: '',
-      cardsAssigned: false,
-      team: null,
+        words: [],
+        allCards: {},
+        touchedCards: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        redCards: [],
+        blueCards: [],
+        bystanderCards: [],
+        assassin: -1,
+        turn: '',
+        cardsAssigned: false,
+        team: null,
     },
-    beforeMount: function() {
-      this.getCards()
+    beforeMount: function () {
+        this.getGame()
     },
     watch: {
-        team: function() {
-            console.log("team changed in spymasterApp")
+        touchedCards: function() {
+            console.log("touchedCards changed")
         }
     },
     methods: {
-      async getCards() {
-        try {
-          let response = await axios.get("/api/getCards");
-          this.allCards = response.data;
-          return true;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      async getNewKeyCard() {
-        try {
-          let response = await axios.get("/api/getNewKeyCard");
-          this.allCards = response.data;
-          return true;
-          
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      
-      async getRandomCardsFromDeck() {
-        try {
-          let response = await axios.put("api/pullRandomCardsFromDeck");
-          window.alert("Cards refreshed");
-          return true;
-          
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      getCardColor: function(index) {
-        
-        if (index == this.allCards.assassin) {
-          return 'bg-black'
-        }
-        
-        for (let i = 0; i < this.allCards.redCards.length; i++) {
-          if (this.allCards.redCards[i] == index) {
-            return 'bg-red-700'
-          }
-        }
-        
-        for (let i = 0; i < this.allCards.blueCards.length; i++) {
-          if (this.allCards.blueCards[i] == index) {
-            return 'bg-blue-700'
-          }
-        }
-        
-        for (let i = 0; i < this.allCards.bystanderCards.length; i++) {
-          if (this.allCards.bystanderCards[i] == index) {
-            return 'bg-orange-200'
-          }
-        }
-      }, // End of getCardColor function
+        async getGame() {
+            try {
+                let response = await axios.get("/api/getGame")
+                this.words = response.data.words;
+                this.allCards = response.data.allCards;
+                this.touchedCards = response.data.touchedCards;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getNewGame() {
+            try {
+                let response = await axios.get("/api/getNewGame")
+                console.log("before getNewGame: \n" + this.allCards + "\n" + this.touchedCards)
+                this.allCards = response.data.allCards;
+                this.touchedCards = response.data.touchedCards;
+                console.log("after getNewGame: \n" + this.allCards + "\n" + this.touchedCards)
+
+                window.alert("New game started");
+                return true;
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        getCardColor: function (index) {
+            // If the card has been flipped over on the player side, make it lighter on the spymaster side
+            if (index == this.allCards.assassin) {
+                if (this.touchedCards[index]) {
+                    return 'bg-black'
+                }
+                else {
+                    return 'bg-gray-700'
+                }
+            }
+
+            for (let i = 0; i < this.allCards.redCards.length; i++) {
+                if (this.allCards.redCards[i] == index) {
+                    return 'bg-red-700'
+                }
+            }
+
+            for (let i = 0; i < this.allCards.blueCards.length; i++) {
+                if (this.allCards.blueCards[i] == index) {
+                    return 'bg-blue-700'
+                }
+            }
+
+            for (let i = 0; i < this.allCards.bystanderCards.length; i++) {
+                if (this.allCards.bystanderCards[i] == index) {
+                    return 'bg-orange-300'
+                }
+            }
+        },
     }, // End of methods
-    
+
 });
