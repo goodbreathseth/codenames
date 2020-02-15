@@ -25,9 +25,15 @@ let gameBoardApp = new Vue({
         blueCardsLeft: 8,
         team: null,
     },
-    created: function () {
+    beforeMount: function () {
         this.getGame();
+        setInterval(() => {
+            this.getGame()
+        }, 2000);
         this.turn = 'blue';
+        if (!this.team) {
+            this.team = "blue"
+        }
     },
     methods: {
         async getGame() {
@@ -131,7 +137,7 @@ let spymasterApp = new Vue({
     data: {
         words: [],
         allCards: {},
-        touchedCards: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        touchedCards: [],
         redCards: [],
         blueCards: [],
         bystanderCards: [],
@@ -142,10 +148,11 @@ let spymasterApp = new Vue({
     },
     beforeMount: function () {
         this.getGame()
-    },
-    watch: {
-        touchedCards: function() {
-            console.log("touchedCards changed")
+        setInterval(() => {
+            this.getGame()
+        }, 2000);
+        if (!this.team) {
+            this.team = "blue"
         }
     },
     methods: {
@@ -162,17 +169,15 @@ let spymasterApp = new Vue({
         async getNewGame() {
             try {
                 let response = await axios.get("/api/getNewGame")
-                console.log("before getNewGame: \n" + this.allCards + "\n" + this.touchedCards)
+                this.words = response.data.words;
                 this.allCards = response.data.allCards;
                 this.touchedCards = response.data.touchedCards;
-                console.log("after getNewGame: \n" + this.allCards + "\n" + this.touchedCards)
-
-                window.alert("New game started");
-                return true;
-
             } catch (error) {
                 console.log(error);
             }
+        },
+        isCardTouched: function (index) {
+            return this.touchedCards[index];
         },
         getCardColor: function (index) {
             // If the card has been flipped over on the player side, make it lighter on the spymaster side

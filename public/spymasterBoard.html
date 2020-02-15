@@ -11,9 +11,15 @@
 <body class="">
     <div id="spymasterApp" class="text-center bg-gray-900 w-screen h-screen px-4 p-4 flex content-between flex-wrap select-none">
         <div class="w-3/4 mx-auto lg:mt-20">
-            <div :class="getCardColor(index)" class="shadow text-transparent inline-block lg:py-4 h-12 m-1 rounded w-1/6 " v-for="(card, index) in words">
-                <p class="-mb-2 -mt-1">{{ card }}</p> 
-                <p class="-my-2 shadow-inner">{{ card }}</p> 
+            <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow-inner" :class="getCardColor(index)" v-for="(card, index) in words">
+                <div v-if="isCardTouched(index)">
+                    <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
+                    <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
+                </div>
+                <div v-else>
+                    <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
+                    <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
+                </div>
             </div>
         </div>
         
