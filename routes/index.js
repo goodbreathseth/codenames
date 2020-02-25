@@ -12,6 +12,7 @@ let game = new Object();
 let touchedCards = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 let allCards = [], redCards = [], blueCards = [], bystanderCards = [];
 let assassin = -1;
+let turn = 'red';
 refreshGame();
 
 

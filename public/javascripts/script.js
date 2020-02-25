@@ -11,8 +11,6 @@ let indexApp = new Vue({
     }
 })
 
-let currentTurn = null;
-
 let gameBoardApp = new Vue({
     el: '#gameBoardApp',
     data: {
@@ -30,9 +28,11 @@ let gameBoardApp = new Vue({
         setInterval(() => {
             this.getGame()
         }, 2000);
+
+        //TODO: sync the turn in the server
         this.turn = 'blue';
         if (!this.team) {
-            this.team = "blue"
+            this.team = "red"
         }
     },
     methods: {
@@ -104,6 +104,7 @@ let gameBoardApp = new Vue({
                 return 'bg-orange-200'
             }
         },
+        // TODO: SYNC WITH THE SERVER WHEN TURNS CHANGE
         changeTurn: function () {
             console.log("changed turn")
             if (this.turn == "blue") {
@@ -113,12 +114,28 @@ let gameBoardApp = new Vue({
                 this.turn = "blue";
             }
         },
-        getColor: function () {
-            if (this.turn == "blue") {
-                return "bg-blue-700";
-            }
-            else {
-                return "bg-red-700";
+        teamColor: function(typeOfColoring) {
+            switch (typeOfColoring) {
+                case "text":
+                    if (this.team === 'blue')
+                        return 'text-blue-700'
+                    else
+                        return 'text-red-700'
+                case "border":
+                    if (this.team === "blue")
+                        return "border-blue-800"
+                    else
+                        return "text-red-800"
+                case "bg":
+                    if (this.team === "blue")
+                        return "bg-blue-800"
+                    else
+                        return "bg-blue-800"
+                default:
+                    if (this.team === 'blue')
+                        return 'bg-blue-800'
+                    else
+                        return 'bg-red-800'
             }
         },
     }, // End of methods
@@ -128,6 +145,12 @@ let gameBoardApp = new Vue({
                 return 'bg-blue-800'
             else
                 return 'bg-red-800'
+        },
+        currentTurnBorderAndTextColor: function () {
+            if (this.turn == "blue")
+                return 'border-blue-600 text-blue-600'
+            else
+                return 'border-red-600 text-red-600'
         },
     }, // End of computed
 })
@@ -151,8 +174,10 @@ let spymasterApp = new Vue({
         setInterval(() => {
             this.getGame()
         }, 2000);
+        //TODO: sync the turn in the server
+        this.turn = 'blue';
         if (!this.team) {
-            this.team = "blue"
+            this.team = "red"
         }
     },
     methods: {
@@ -208,6 +233,44 @@ let spymasterApp = new Vue({
                 }
             }
         },
+        teamColor: function(typeOfColoring) {
+            switch (typeOfColoring) {
+                case "text":
+                    if (this.team === 'blue')
+                        return 'text-blue-700'
+                    else
+                        return 'text-red-700'
+                case "border":
+                    if (this.team === "blue")
+                        return "border-blue-800"
+                    else
+                        return "text-red-800"
+                case "bg":
+                    if (this.team === "blue")
+                        return "bg-blue-800"
+                    else
+                        return "bg-blue-800"
+                default:
+                    if (this.team === 'blue')
+                        return 'bg-blue-800'
+                    else
+                        return 'bg-red-800'
+            }
+        },
     }, // End of methods
+    computed: {
+        currentTurnColor: function () {
+            if (this.turn == "blue")
+                return 'bg-blue-800'
+            else
+                return 'bg-red-800'
+        },
+        currentTurnBorderAndTextColor: function () {
+            if (this.turn == "blue")
+                return 'border-blue-600 text-blue-600'
+            else
+                return 'border-red-600 text-red-600'
+        },
+    }, // End of computed
 
 });
