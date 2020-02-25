@@ -38,10 +38,12 @@ let gameBoardApp = new Vue({
     methods: {
         async getGame() {
             try {
-                let response = await axios.get("/api/getGame")
+                let response = await axios.get("/api/getGame");
                 this.words = response.data.words;
                 this.allCards = response.data.allCards;
                 this.touchedCards = response.data.touchedCards;
+                this.redCardsLeft = response.data.redCardsLeft;
+                this.blueCardsLeft = response.data.blueCardsLeft;
             } catch (error) {
                 console.log(error);
             }
@@ -49,22 +51,11 @@ let gameBoardApp = new Vue({
         async cardSelected(index) {
             if (this.touchedCards[index] == false) {
                 try {
-                    let response = await axios.post("/api/cardSelected", {
+                    await axios.post("/api/cardSelected", {
                         index
                     });
 
                     Vue.set(this.touchedCards, index, true)
-                    for (let i = 0; i < this.allCards.redCards.length; i++) {
-                        if (this.allCards.redCards[i] == index) {
-                            this.redCardsLeft--;
-                        }
-                    }
-                    for (let i = 0; i < this.allCards.blueCards.length; i++) {
-                        if (this.allCards.blueCards[i] == index) {
-                            this.blueCardsLeft--;
-                        }
-                    }
-                    
                 } catch (error) {
                     console.log(error)
                 }
@@ -76,8 +67,7 @@ let gameBoardApp = new Vue({
         getCardColor: function (index) {
             if (this.touchedCards[index]) {
                 if (index == this.allCards.assassin) {
-                    setTimeout(() => window.confirm("Game over!"), 300);
-
+                    // setTimeout(() => window.confirm("Game over!"), 300);
                     return 'bg-black'
                 }
 
@@ -153,7 +143,7 @@ let gameBoardApp = new Vue({
                 return 'border-red-600 text-red-600'
         },
     }, // End of computed
-})
+});
 
 let spymasterApp = new Vue({
     el: '#spymasterApp',
