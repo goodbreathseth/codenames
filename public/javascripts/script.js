@@ -168,6 +168,8 @@ let spymasterApp = new Vue({
         turn: '',
         cardsAssigned: false,
         team: null,
+        redCardsLeft: 9,
+        blueCardsLeft: 8,
     },
     beforeMount: function () {
         this.getGame()
