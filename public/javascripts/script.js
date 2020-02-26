@@ -1,15 +1,9 @@
 let indexApp = new Vue({
     el: '#indexApp',
     data: {
-        team: null,
+        team: "",
     },
-    watch: {
-        team: function () {
-            gameBoardApp.team = this.team;
-            spymasterApp.team = this.team
-        }
-    }
-})
+});
 
 let gameBoardApp = new Vue({
     el: '#gameBoardApp',
@@ -17,23 +11,18 @@ let gameBoardApp = new Vue({
         words: [],
         touchedCards: [],
         allCards: [],
-        turn: '',
+        turn: "",
         index: 0,
         redCardsLeft: 9,
         blueCardsLeft: 8,
-        team: null,
+        team: "red",
     },
     beforeMount: function () {
         this.getGame();
         setInterval(() => {
             this.getGame()
         }, 2000);
-
-        //TODO: sync the turn in the server
-        this.turn = 'blue';
-        if (!this.team) {
-            this.team = "red"
-        }
+        this.team = "red"
     },
     methods: {
         async getGame() {
@@ -44,12 +33,23 @@ let gameBoardApp = new Vue({
                 this.touchedCards = response.data.touchedCards;
                 this.redCardsLeft = response.data.redCardsLeft;
                 this.blueCardsLeft = response.data.blueCardsLeft;
+                this.turn = response.data.turn;
+                if (this.redCardsLeft == 0) {
+                    window.confirm("Red Team Won!")
+                } else if (this.blueCardsLeft == 0) {
+                    window.confirm("Blue Team Won!")
+                }
             } catch (error) {
                 console.log(error);
             }
         },
         async cardSelected(index) {
-            if (this.touchedCards[index] == false) {
+            console.log("You are team: " + this.team);
+            console.log("It is team turn: " + this.turn);
+            if (this.turn != this.team) {
+                alert("It is not your turn!")
+            }
+            else if (this.touchedCards[index] == false ) {
                 try {
                     await axios.post("/api/cardSelected", {
                         index
@@ -61,47 +61,38 @@ let gameBoardApp = new Vue({
                 }
             }
         },
+        async changeTurn () {
+            let turn = this.turn;
+            try {
+                await axios.post("/api/changeTurn", {
+                    turn
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        },
         isCardTouched: function (index) {
             return this.touchedCards[index];
         },
         getCardColor: function (index) {
             if (this.touchedCards[index]) {
                 if (index == this.allCards.assassin) {
-                    // setTimeout(() => window.confirm("Game over!"), 300);
+                    // window.confirm("Game over!");
                     return 'bg-black'
                 }
-
-                for (let i = 0; i < this.allCards.redCards.length; i++) {
-                    if (this.allCards.redCards[i] == index) {
-                        return 'bg-red-700'
-                    }
+                else if (this.allCards.redCards.includes(index)) {
+                    return 'bg-red-700';
+                }
+                else if (this.allCards.blueCards.includes(index)) {
+                    return 'bg-blue-700';
+                }
+                else if (this.allCards.bystanderCards.includes(index)) {
+                    return 'bg-orange-300';
                 }
 
-                for (let i = 0; i < this.allCards.blueCards.length; i++) {
-                    if (this.allCards.blueCards[i] == index) {
-                        return 'bg-blue-700'
-                    }
-                }
-
-                for (let i = 0; i < this.allCards.bystanderCards.length; i++) {
-                    if (this.allCards.bystanderCards[i] == index) {
-                        // return 'bg-gray-500'
-                        return 'bg-orange-300'
-                    }
-                }
             }
             else {
                 return 'bg-orange-200'
-            }
-        },
-        // TODO: SYNC WITH THE SERVER WHEN TURNS CHANGE
-        changeTurn: function () {
-            console.log("changed turn")
-            if (this.turn == "blue") {
-                this.turn = "red";
-            }
-            else {
-                this.turn = "blue";
             }
         },
         teamColor: function(typeOfColoring) {

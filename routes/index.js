@@ -12,7 +12,6 @@ let game = new Object();
 let touchedCards = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 let allCards = [], redCards = [], blueCards = [], bystanderCards = [];
 let assassin = -1;
-let turn = 'red';
 refreshGame();
 
 /* GET home page. */
@@ -57,6 +56,20 @@ router.post("/api/cardSelected", async (req, res) => {
         game.touchedCards[index] = true;
 
         res.send(touchedCards);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.post("/api/changeTurn", async (req, res) => {
+    try {
+        if (game.turn == "blue") {
+            game.turn = "red";
+        }
+        else {
+            game.turn = "blue";
+        }
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -114,6 +127,7 @@ function refreshGame() {
         assassin: assassin
     };
     game.allCards = items;
+    game.turn = "red";
     game.redCardsLeft = items.redCards.length;
     game.blueCardsLeft = items.blueCards.length;
     game.words = getRandom(words, 25);
