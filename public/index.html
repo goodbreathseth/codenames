@@ -25,10 +25,10 @@
 
     <div v-if="team" class="mx-auto p-1 lg:p-8 lg:w-5/6 lg:mx-auto rounded" style="height: 45%">
         <div class="pr-8 inline-block">
-            <a href="spymasterBoard.html" id="spymaster" type="button" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Spymaster</a>
+            <a href="spymasterBoard.html" id="spymaster" type="button" @click="setTeam()" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Spymaster</a>
         </div>
         <div class="pl-8 inline-block">
-            <a href="gameBoard.html" id="player" type="button" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Player</a>
+            <a href="gameBoard.html" id="player" type="button" @click="setTeam()" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Player</a>
         </div>
     </div>
 </div>
