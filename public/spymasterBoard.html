@@ -29,38 +29,41 @@
 
         <div class="shadow mx-auto p-1 lg:p-8 bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
             <div class="">
-                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow" :class="getCardColor(index)" v-for="(card, index) in words">
+                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow relative" :class="getCardColor(index)" v-for="(card, index) in words">
                     <div v-if="isCardTouched(index)">
                         <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
-                        <p class="-my-2 shadow-inner">{{ card }}</p>
+                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
+                        <div class="absolute top-0 bottom-0 right-0 left-0 mx-auto">{{ card }}</div>
                     </div>
-                    <div v-else>
+                    <div v-else class="relative">
                         <p class="text-sm -mb-2 -mt-1 text-left mr-2 text-transparent" style="transform:rotate(-180deg);">{{ card }}</p> 
-                        <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
+                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p> 
+                        <div class="absolute text-white font-bold text-xl bottom-0 mb-1 right-0 left-0 mx-auto">{{ card }}</div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full text-xl flex justify-around">
+            <div>
+                <div class="inline-block bg-red-800 px-4 py-2 mr-2 text-white">
+                    Red cards left: {{ redCardsLeft }}
+                </div>
+                <div class="inline-block bg-blue-800 px-4 py-2 text-white">
+                    Blue cards left: {{ blueCardsLeft }}
+                </div>
+            </div>
+            <div>
+                <div class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2" @click="getNewGame()">New Game</div>
+                <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
+                    Timer: <span class="font-bold">24</span>
                 </div>
             </div>
         </div>
 <!-- 
-        <div class="shadow mx-auto p-1 lg:p-8 bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
-            <div class="">
-                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow" :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
-                    <div v-if="isCardTouched(index)">
-                        <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
-                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
-                    </div>
-                    <div v-else>
-                        <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
-                        <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        
+        <div class="bg-gray-200 rounded text-sm px-3 py-1">First team: red</div>
         <div class="w-full mt-2 flex justify-between text-sm">
-            <div class="bg-gray-200 rounded text-sm px-3 py-1" @click="getNewGame()">New Game</div>
-            <div class="bg-gray-200 rounded text-sm px-3 py-1">First team: red</div>
-        </div>
+        </div> -->
         
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>

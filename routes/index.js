@@ -24,6 +24,7 @@ router.get("/spymasterBoard", (req, res) => {
     res.sendFile(filePath + '/spymasterBoard.html');
 });
 
+
 router.get("/api/getGame", async (req, res) => {
     try {
         res.send(game);
@@ -36,7 +37,7 @@ router.get("/api/getGame", async (req, res) => {
 router.get("/api/getNewGame", async (req, res) => {
     try {
         refreshGame();
-
+        
         res.send(game);
     } catch (error) {
         console.log(error);

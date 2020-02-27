@@ -3,6 +3,16 @@ let indexApp = new Vue({
     data: {
         team: "",
     },
+    mounted() {
+        if (localStorage.team) {
+            this.team = localStorage.team;
+        }
+    },
+    watch: {
+        team(newTeam) {
+            localStorage.team = newTeam;
+        }
+    }
 });
 
 let gameBoardApp = new Vue({
@@ -12,17 +22,21 @@ let gameBoardApp = new Vue({
         touchedCards: [],
         allCards: [],
         turn: "",
+        team: "",
         index: 0,
         redCardsLeft: 9,
         blueCardsLeft: 8,
-        team: "red",
     },
     beforeMount: function () {
         this.getGame();
         setInterval(() => {
             this.getGame()
         }, 2000);
-        this.team = "red"
+    },
+    mounted() {
+        if (localStorage.team) {
+            this.team = localStorage.team;
+        }
     },
     methods: {
         async getGame() {
@@ -49,7 +63,7 @@ let gameBoardApp = new Vue({
             if (this.turn != this.team) {
                 alert("It is not your turn!")
             }
-            else if (this.touchedCards[index] == false ) {
+            else if (this.touchedCards[index] == false) {
                 try {
                     await axios.post("/api/cardSelected", {
                         index
@@ -61,7 +75,7 @@ let gameBoardApp = new Vue({
                 }
             }
         },
-        async changeTurn () {
+        async changeTurn() {
             let turn = this.turn;
             try {
                 await axios.post("/api/changeTurn", {
@@ -95,7 +109,7 @@ let gameBoardApp = new Vue({
                 return 'bg-orange-200'
             }
         },
-        teamColor: function(typeOfColoring) {
+        teamColor: function (typeOfColoring) {
             switch (typeOfColoring) {
                 case "text":
                     if (this.team === 'blue')
@@ -147,18 +161,21 @@ let spymasterApp = new Vue({
         bystanderCards: [],
         assassin: -1,
         turn: '',
+        team: '',
         cardsAssigned: false,
         team: null,
+        redCardsLeft: 9,
+        blueCardsLeft: 8,
     },
     beforeMount: function () {
         this.getGame()
         setInterval(() => {
             this.getGame()
         }, 2000);
-        //TODO: sync the turn in the server
-        this.turn = 'blue';
-        if (!this.team) {
-            this.team = "red"
+    },
+    mounted() {
+        if (localStorage.team) {
+            this.team = localStorage.team;
         }
     },
     methods: {
@@ -168,6 +185,9 @@ let spymasterApp = new Vue({
                 this.words = response.data.words;
                 this.allCards = response.data.allCards;
                 this.touchedCards = response.data.touchedCards;
+                this.redCardsLeft = response.data.redCardsLeft;
+                this.blueCardsLeft = response.data.blueCardsLeft;
+                this.turn = response.data.turn;
             } catch (error) {
                 console.log(error);
             }
@@ -214,7 +234,7 @@ let spymasterApp = new Vue({
                 }
             }
         },
-        teamColor: function(typeOfColoring) {
+        teamColor: function (typeOfColoring) {
             switch (typeOfColoring) {
                 case "text":
                     if (this.team === 'blue')
