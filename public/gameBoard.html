@@ -6,59 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Codenames</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    
+    <script src="https://kit.fontawesome.com/d077f20d76.js" crossorigin="anonymous"></script>
     <style>
-        
+
     </style>
 </head>
 <body>
-    <div id="gameBoardApp" class="font-thin text-center text-2xl w-screen h-screen px-4 p-4 flex content-around flex-wrap select-none">
-        <div class="flex justify-around items-center w-full">
-            <h1 class="text-center font-light hidden lg:block text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
-            <div class="text-6xl px-8 bg-white border-4" :class="currentTurnBorderAndTextColor">
-                <div class="mt-1 text-base text-gray-700">{{ turn }} team's hint</div>
-                <div class="-mt-5">Stuff - 4</div> 
-            </div>
-        </div>
-        <div class="shadow mx-auto p-1 lg:p-8 bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
-            
-            <!-- This outer div is used to format the amount of cards to display in a row -->
-            <div class="">
-                <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow" :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
-                    <div v-if="isCardTouched(index)">
-                        <p class="text-sm -mb-2 -mt-1 text-transparent text-left mr-2">{{ card }}</p> 
-                        <p class="-my-2 text-transparent shadow-inner">{{ card }}</p>
-                    </div>
-                    <div v-else>
-                        <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p> 
-                        <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="w-full text-xl flex justify-around">
+<div id="gameBoardApp" class="font-thin text-center text-2xl w-screen h-screen px-4 p-4 flex content-around flex-wrap select-none">
+    <div class="flex justify-around items-center w-full">
+        <h1 class="text-center font-light hidden lg:block text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
+        <div class="text-2xl px-8">
+            <div class="mt-1 text-base text-gray-700 mb-2">{{ turn }} team's hint</div>
             <div>
-                <div class="inline-block bg-red-800 px-4 py-2 mr-2 text-white border border-gray-300">
-                    Red cards left: {{ redCardsLeft }}
-                </div>
-                <div class="inline-block bg-blue-800 px-4 py-2 text-white border border-gray-300">
-                    Blue cards left: {{ blueCardsLeft }}
-                </div>
-            </div>
-            <div>
-                <div class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2 border border-white" @click="changeTurn">
-                    Done guessing
-                </div>
-                <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
-                    Timer: <span class="font-bold">24</span>
-                </div>
+                <span class="p-2 border-2 min-w-sm" :class="currentTurnBorderAndTextColor" v-model="word"></span>
+                <span class="p-2 w-16 border-2 min-sm" :class="currentTurnBorderAndTextColor" v-model="wordNumber"></span>
             </div>
         </div>
-        
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script type="text/javascript" src="javascripts/script.js"></script>
+    <div class="shadow mx-auto p-1 lg:p-8 bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
+
+        <!-- This outer div is used to format the amount of cards to display in a row -->
+        <div class="">
+            <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow" :class="getCardColor(index)" v-for="(card, index) in words" @click="cardSelected(index)">
+                <div class="text-white font-bold" v-if="isCardTouched(index)">
+                    <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p>
+                    <p class="-my-2 shadow-inner truncate">{{ card }}</p>
+                </div>
+                <div v-else>
+                    <p class="text-sm -mb-2 -mt-1 text-left mr-2" style="transform:rotate(-180deg);">{{ card }}</p>
+                    <p class="-my-2 text-gray-800 shadow-inner truncate">{{ card }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full text-xl flex justify-around">
+        <div>
+            <div class="inline-block bg-red-800 px-4 py-2 mr-2 text-white border border-gray-300">
+                Red cards left: {{ redCardsLeft }}
+            </div>
+            <div class="inline-block bg-blue-800 px-4 py-2 text-white border border-gray-300">
+                Blue cards left: {{ blueCardsLeft }}
+            </div>
+        </div>
+        <div>
+            <div class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2 border border-white" @click="changeTurn">
+                Done guessing
+            </div>
+            <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
+                Timer: <span class="font-bold">24</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="javascripts/script.js"></script>
 </body>
 </html>
