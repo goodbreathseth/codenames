@@ -33,7 +33,7 @@ let gameBoardApp = new Vue({
         this.getGame();
         setInterval(() => {
             this.getGame()
-        }, 2000);
+        }, 1000);
     },
     mounted() {
         if (localStorage.team) {
