@@ -28,6 +28,8 @@ let gameBoardApp = new Vue({
         blueCardsLeft: 8,
         hint: "",
         hintNum: "",
+        winner: "",
+        winner_printed: false
     },
     beforeMount: function () {
         this.getGame();
@@ -52,6 +54,11 @@ let gameBoardApp = new Vue({
                 this.turn = response.data.turn;
                 this.hint = response.data.hint;
                 this.hintNum = response.data.hintNum;
+                this.winner = response.data.winner
+                if (this.winner !== "" && !this.winner_printed) {
+                    alert(this.winner)
+                    this.winner_printed = true
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -169,7 +176,7 @@ let spymasterApp = new Vue({
         this.getGame()
         setInterval(() => {
             this.getGame()
-        }, 2000);
+        }, 1000);
     },
     mounted() {
         if (localStorage.team) {
@@ -197,6 +204,7 @@ let spymasterApp = new Vue({
         async getNewGame() {
             try {
                 let response = await axios.get("/api/getNewGame")
+                this.winner_printed = false;
                 this.words = response.data.words;
                 this.allCards = response.data.allCards;
                 this.touchedCards = response.data.touchedCards;

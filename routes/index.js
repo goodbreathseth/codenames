@@ -50,12 +50,12 @@ router.post("/api/cardSelected", async (req, res) => {
     try {
         let index = req.body.index;
         if (index == game.allCards.assassin) {
-            alert("Game Over")
+            game.winner = "Game Over"
         }
         if (game.allCards.redCards.includes(index)) {
             game.redCardsLeft--;
             if (game.redCardsLeft == 0) {
-                alert("Red Team Won!")
+                game.winner = "Red Team Won!"
             }
             if (game.turn !== "red") {
                 game.turn = "red"
@@ -65,7 +65,7 @@ router.post("/api/cardSelected", async (req, res) => {
         } else if (game.allCards.blueCards.includes(index)) {
             game.blueCardsLeft--;
             if (game.blueCardsLeft == 0) {
-                alert("Blue Team Won!")
+                game.winner = "Blue Team Won!"
             }
             if (game.turn !== "blue") {
                 game.turn = "blue"
@@ -168,6 +168,7 @@ function refreshGame() {
         assassin: assassin
     };
     game.allCards = items;
+    game.winner = ""
     game.turn = "red";
     game.redCardsLeft = items.redCards.length;
     game.blueCardsLeft = items.blueCards.length;
