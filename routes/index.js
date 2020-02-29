@@ -49,28 +49,38 @@ router.get("/api/getNewGame", async (req, res) => {
 router.post("/api/cardSelected", async (req, res) => {
     try {
         let index = req.body.index;
-        console.log("TURN OF: " + game.turn)
+        if (index == game.allCards.assassin) {
+            alert("Game Over")
+        }
         if (game.allCards.redCards.includes(index)) {
             game.redCardsLeft--;
+            if (game.redCardsLeft == 0) {
+                alert("Red Team Won!")
+            }
             if (game.turn !== "red") {
-                console.log("got into red if")
-                game.turn = "blue"
+                game.turn = "red"
+                game.hint = ""
+                game.hintNum = ""
             }
         } else if (game.allCards.blueCards.includes(index)) {
             game.blueCardsLeft--;
+            if (game.blueCardsLeft == 0) {
+                alert("Blue Team Won!")
+            }
             if (game.turn !== "blue") {
-                console.log("got into blue if")
-                game.turn = "red"
+                game.turn = "blue"
+                game.hint = ""
+                game.hintNum = ""
             }
         } else {
             if (game.turn === "blue") {
-                console.log("got into other if")
                 game.turn = "red";
             }
             else {
-                console.log("got into other if")
                 game.turn = "blue";
             }
+            game.hint = ""
+            game.hintNum = ""
         }
         game.touchedCards[index] = true;
 

@@ -52,11 +52,6 @@ let gameBoardApp = new Vue({
                 this.turn = response.data.turn;
                 this.hint = response.data.hint;
                 this.hintNum = response.data.hintNum;
-                if (this.redCardsLeft == 0) {
-                    window.confirm("Red Team Won!")
-                } else if (this.blueCardsLeft == 0) {
-                    window.confirm("Blue Team Won!")
-                }
             } catch (error) {
                 console.log(error);
             }
@@ -93,7 +88,6 @@ let gameBoardApp = new Vue({
         getCardColor: function (index) {
             if (this.touchedCards[index]) {
                 if (index == this.allCards.assassin) {
-                    // window.confirm("Game over!");
                     return 'bg-black'
                 }
                 else if (this.allCards.redCards.includes(index)) {
@@ -218,6 +212,7 @@ let spymasterApp = new Vue({
                         hint: view.hint,
                         hintNum: this.hintNum
                     })
+                    alert("Hint sent!")
                 } catch (error) {
                     console.log(error)
                 }
