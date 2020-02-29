@@ -26,6 +26,8 @@ let gameBoardApp = new Vue({
         index: 0,
         redCardsLeft: 9,
         blueCardsLeft: 8,
+        hint: "",
+        hintNum: "",
     },
     beforeMount: function () {
         this.getGame();
@@ -48,6 +50,8 @@ let gameBoardApp = new Vue({
                 this.redCardsLeft = response.data.redCardsLeft;
                 this.blueCardsLeft = response.data.blueCardsLeft;
                 this.turn = response.data.turn;
+                this.hint = response.data.hint;
+                this.hintNum = response.data.hintNum;
                 if (this.redCardsLeft == 0) {
                     window.confirm("Red Team Won!")
                 } else if (this.blueCardsLeft == 0) {
@@ -111,9 +115,9 @@ let gameBoardApp = new Vue({
             switch (typeOfColoring) {
                 case "text":
                     if (this.team === 'blue')
-                        return 'text-blue-700'
+                        return 'text-blue-800'
                     else
-                        return 'text-red-700'
+                        return 'text-red-800'
                 case "border":
                     if (this.team === "blue")
                         return "border-blue-800"
@@ -141,9 +145,9 @@ let gameBoardApp = new Vue({
         },
         currentTurnBorderAndTextColor: function () {
             if (this.turn == "blue")
-                return 'border-blue-600 text-blue-600'
+                return 'border-blue-800 text-blue-800'
             else
-                return 'border-red-600 text-red-600'
+                return 'border-red-800 text-red-800'
         },
     }, // End of computed
 });
@@ -164,6 +168,8 @@ let spymasterApp = new Vue({
         team: null,
         redCardsLeft: 9,
         blueCardsLeft: 8,
+        hint: '',
+        hintNum: '',
     },
     beforeMount: function () {
         this.getGame()
@@ -185,7 +191,11 @@ let spymasterApp = new Vue({
                 this.touchedCards = response.data.touchedCards;
                 this.redCardsLeft = response.data.redCardsLeft;
                 this.blueCardsLeft = response.data.blueCardsLeft;
-                this.turn = response.data.turn;
+                if (this.turn != response.data.turn) {
+                    this.turn = response.data.turn;
+                    this.hint = "";
+                    this.hintNum = "";
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -200,6 +210,17 @@ let spymasterApp = new Vue({
                 console.log(error);
             }
         },
+        async setHint() {
+            let view = this;
+            try {
+                await axios.post("/api/setHint", {
+                    hint: view.hint,
+                    hintNum: this.hintNum
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        },
         isCardTouched: function (index) {
             return this.touchedCards[index];
         },
@@ -207,10 +228,10 @@ let spymasterApp = new Vue({
             // If the card has been flipped over on the player side, make it lighter on the spymaster side
             if (index == this.allCards.assassin) {
                 if (this.touchedCards[index]) {
-                    return 'bg-black'
+                    return 'bg-gray-900'
                 }
                 else {
-                    return 'bg-gray-700'
+                    return 'bg-gray-900'
                 }
             }
 
@@ -241,34 +262,34 @@ let spymasterApp = new Vue({
                         return 'text-red-700'
                 case "border":
                     if (this.team === "blue")
-                        return "border-blue-800"
+                        return "border-blue-700"
                     else
-                        return "text-red-800"
+                        return "text-red-700"
                 case "bg":
                     if (this.team === "blue")
-                        return "bg-blue-800"
+                        return "bg-blue-700"
                     else
-                        return "bg-blue-800"
+                        return "bg-blue-700"
                 default:
                     if (this.team === 'blue')
-                        return 'bg-blue-800'
+                        return 'bg-blue-700'
                     else
-                        return 'bg-red-800'
+                        return 'bg-red-700'
             }
         },
     }, // End of methods
     computed: {
         currentTurnColor: function () {
             if (this.turn == "blue")
-                return 'bg-blue-800'
+                return 'bg-blue-700'
             else
-                return 'bg-red-800'
+                return 'bg-red-700'
         },
         currentTurnBorderAndTextColor: function () {
             if (this.turn == "blue")
-                return 'border-blue-600 text-blue-600'
+                return 'border-blue-700 text-blue-700'
             else
-                return 'border-red-600 text-red-600'
+                return 'border-red-700 text-red-700'
         },
     }, // End of computed
 

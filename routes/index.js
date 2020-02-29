@@ -89,6 +89,18 @@ router.post("/api/changeTurn", async (req, res) => {
         else {
             game.turn = "blue";
         }
+        game.hint = '';
+        game.hintNum = '';
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.post("/api/setHint", async (req, res) => {
+    try {
+        game.hint = req.body.hint;
+        game.hintNum = req.body.hintNum;
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
