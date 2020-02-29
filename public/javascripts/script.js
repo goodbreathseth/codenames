@@ -212,13 +212,17 @@ let spymasterApp = new Vue({
         },
         async setHint() {
             let view = this;
-            try {
-                await axios.post("/api/setHint", {
-                    hint: view.hint,
-                    hintNum: this.hintNum
-                })
-            } catch (error) {
-                console.log(error)
+            if (this.turn === this.team) {
+                try {
+                    await axios.post("/api/setHint", {
+                        hint: view.hint,
+                        hintNum: this.hintNum
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                alert("Not your turn")
             }
         },
         isCardTouched: function (index) {
