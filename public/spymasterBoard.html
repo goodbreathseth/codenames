@@ -11,16 +11,14 @@
 </head>
 <body class="">
     <div id="spymasterApp" class="font-light text-center bg-gray-900 w-screen h-screen px-4 p-4 flex content-around flex-wrap select-none">
-        <div class="flex justify-around items-center w-full">
-            <h1 class="text-center font-light hidden lg:block text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
-            <div class="text-2xl px-8 bg-white border-4" :class="currentTurnBorderAndTextColor">
-                <div class="mt-1 text-base text-gray-700">{{ turn }} team's hint</div>
-                <div>
-                    <form @submit.prevent="sendWords">
-                        <input class="p-2 border-2" :class="currentTurnBorderAndTextColor" placeholder="hint" type="text" v-model="word"/>
-                        <input class="p-2 w-16 border-2" :class="currentTurnBorderAndTextColor" type="number" placeholder="4" v-model="wordNumber"/>
-                        <button class="text-white text-2xl p-2" :class="currentTurnColor" type="submit"><i class="fas fa-arrow-right"></i></button>
-                    </form>
+        <div class="flex justify-around items-center w-full flex-wrap">
+            <h1 class="text-center font-light hidden md:block text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
+            <div class="px-8" :class="currentTurnBorderAndTextColor">
+                <div class="my-1 text-gray-200">{{ turn }} team's hint</div>
+                <div class="text-2xl">
+                    <input class="p-2 text-gray-200 border-2 bg-transparent sm:text-gray-200" :class="currentTurnBorderAndTextColor" placeholder="word" type="text" v-model="hint"/>
+                    <input class="p-2 w-16 text-gray-200 border-2 bg-transparent sm:text-gray-200" :class="currentTurnBorderAndTextColor" type="number" placeholder="#" v-model="hintNum"/>
+                    <button class="text-white text-2xl py-2 px-4 border-2 sm:text-white" :class="[currentTurnColor, currentTurnBorderAndTextColor]" @click="setHint()"><i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -54,10 +52,10 @@
                 </div>
             </div>
             <div>
-                <div class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2" @click="getNewGame()">New Game</div>
-                <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
+                <button class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2" @click="getNewGame()">New Game</button>
+                <!-- <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
                     Timer: <span class="font-bold">24</span>
-                </div>
+                </div> -->
             </div>
         </div>
 <!-- 
