@@ -58,8 +58,6 @@ let gameBoardApp = new Vue({
             }
         },
         async cardSelected(index) {
-            console.log("You are team: " + this.team);
-            console.log("It is team turn: " + this.turn);
             if (this.turn != this.team) {
                 alert("It is not your turn!")
             }
