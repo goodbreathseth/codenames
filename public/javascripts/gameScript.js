@@ -13,12 +13,13 @@ let gameBoardApp = new Vue({
         hint: "",
         hintNum: "",
         winner: "",
-        winner_printed: false
+        winner_printed: false,
+        showNavBar: false,
+        showToast: false,
     },
     beforeMount: function () {
     },
     mounted() {
-        console.log("player is mounted")
         this.getGame();
         setInterval(() => {
             this.getGame()
@@ -66,6 +67,7 @@ let gameBoardApp = new Vue({
         },
         async changeTurn() {
             let turn = this.turn;
+            
             try {
                 await axios.post("/api/changeTurn", {
                     turn
@@ -73,6 +75,7 @@ let gameBoardApp = new Vue({
             } catch (error) {
                 console.log(error)
             }
+
         },
         isCardTouched: function (index) {
             return this.touchedCards[index];
@@ -114,6 +117,11 @@ let gameBoardApp = new Vue({
                         return "bg-blue-800"
                     else
                         return "bg-blue-800"
+                case "bgLight":
+                    if (this.team === 'blue')
+                        return "bg-blue-700"
+                    else
+                        return "bg-red-700"
                 default:
                     if (this.team === 'blue')
                         return 'bg-blue-800'
@@ -122,6 +130,16 @@ let gameBoardApp = new Vue({
             }
         },
     }, // End of methods
+
+    watch: {
+        turn: function() {
+            this.showToast = true
+            setTimeout(() => {
+                this.showToast = false;
+            }, 2000);
+        }
+    }, // End of watchers
+
     computed: {
         currentTurnColor: function () {
             if (this.turn == "blue")
@@ -135,5 +153,25 @@ let gameBoardApp = new Vue({
             else
                 return 'border-red-800 text-red-800'
         },
+        getNavBarColor: function() {
+            if (this.team === 'blue') 
+                return "border-top: 4rem solid; border-right: 4rem solid transparent;"
+        },
+        showNavBarVisibility: function() {
+            if (this.showNavBar) 
+                return 'left: 0;'
+            else 
+                return 'left: -40vw;'
+        },
+        toastStyling: function() {
+            // If the turn changes, then do a setTimeout for a couple seconds
+            if (this.showToast) {
+                return 'bottom: 2rem;'
+            }
+            else {
+                return 'bottom: -3rem;'
+            }
+        }
+        
     }, // End of computed
 });

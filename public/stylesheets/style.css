@@ -1,0 +1,13 @@
+@media only screen and (orientation:portrait){
+  body {
+    height: 100vw;
+    transform: rotate(90deg);
+  }
+}
+
+.navbar-triangle {
+  width: 0;
+  height: 0;
+  border-top: 4rem solid gray;
+  border-right: 4rem solid transparent;
+}
