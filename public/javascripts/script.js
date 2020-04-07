@@ -7,6 +7,7 @@ let indexApp = new Vue({
         if (localStorage.team) {
             this.team = localStorage.team;
         }
+        // The scrolling should not be here
     },
     watch: {
         team(newTeam) {
