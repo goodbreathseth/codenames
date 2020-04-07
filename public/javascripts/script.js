@@ -7,10 +7,6 @@ let indexApp = new Vue({
         if (localStorage.team) {
             this.team = localStorage.team;
         }
-        setTimeout(function(){
-            // This hides the address bar:
-            window.scrollTo(0, 1);
-        }, 10);
     },
     watch: {
         team(newTeam) {
