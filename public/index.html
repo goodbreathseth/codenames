@@ -6,30 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Codenames</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
 
 </head>
 <body>
-<div id="indexApp" class="font-light text-center w-screen h-screen px-4 p-2 bg-blue-900">
-    <h1 class="hidden lg:block text-6xl text-white m-8 text-center mx-auto font-bold">CODENAMES</h1>
-    <div class="p-1 lg:p-8 lg:w-5/6 lg:mx-auto rounded text-4xl text-white" style="height: 20%">
-        <h1 class="inline-block">Teams:</h1>
-        <div class="inline-block mx-auto box-content">
-            <h2 class="inline-block pl-8 pr-2">Blue</h2>
-            <button class="border-8 border-blue-500 inline-block rounded" @click="team = 'blue'"></button>
-        </div>
-        <div class="mx-auto my-auto inline-block">
-            <h2 class="inline-block pl-8 pr-2">Red</h2>
-            <button class="border-8 border-red-500 inline-block rounded" @click="team = 'red'"></button>
-        </div>
+<div id="indexApp" class="relative font-light text-center w-screen h-screen px-4 p-8 bg-blue-900">
+    <h1 class="text-5xl md:text-6xl text-white mb-10 sm:mb-20 mt-20 text-center mx-auto font-bold">CODENAMES</h1>
+
+    <div class="text-xl text-white">
+        <h1 class="text-4xl my-2">Choose Team</h1>
+        <hr class="border-t  mb-6 w-10/12 sm:w-1/2 mx-auto">
+        <button class="bg-blue-500 hover:bg-blue-600 rounded-full w-32 sm:w-40 py-3 mx-1 sm:mx-8" @click="team = 'blue'">Blue</button>
+        <button class="bg-red-500 hover:bg-red-600 rounded-full w-32 sm:w-40 py-3 mx-1 sm:mx-8" @click="team = 'red'">Red</button>
     </div>
 
-    <div v-if="team" class="mx-auto p-1 lg:p-8 lg:w-5/6 lg:mx-auto rounded" style="height: 45%">
-        <div class="pr-8 inline-block">
-            <a href="spymasterBoard.html" id="spymaster" type="button" @click="setTeam()" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Spymaster</a>
-        </div>
-        <div class="pl-8 inline-block">
-            <a href="gameBoard.html" id="player" type="button" @click="setTeam()" class="rounded-full bg-gray-300 py-2 px-8 text-gray-900 hover:text-gray-600">Player</a>
-        </div>
+    <div v-if="team" class="absolute bottom-0 right-0 left-0 mx-auto my-8 sm:mb-20 text-2xl">
+        <button class="w-10/12 sm:w-7/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow-lg">
+            <a href="spymasterBoard.html" id="spymaster" type="button" @click="setTeam()" class="py-4 px-8 text-gray-900 hover:text-gray-600">Spymaster</a>
+        </button>
+        <button class="w-10/12 sm:w-7/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow">
+            <a href="gameBoard.html" id="player" type="button" @click="setTeam()" class="py-4 px-8 text-gray-900 hover:text-gray-600">Player</a>
+        </button>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
