@@ -2,6 +2,7 @@ let indexApp = new Vue({
     el: '#indexApp',
     data: {
         team: "",
+        link: "",
     },
     mounted() {
         if (localStorage.team) {
@@ -22,6 +23,11 @@ let indexApp = new Vue({
                 return 'bg-red-800'
             else    
                 return 'bg-gray-900'
+        }
+    },
+    methods: {
+        goToPage() {
+            window.open(this.link, "_top");
         }
     }
 });

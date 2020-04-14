@@ -7,25 +7,26 @@
     <title>Spymaster key</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/d077f20d76.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="stylesheets/style.css">
 
 </head>
-<body class="">
-    <div id="spymasterApp" class="font-light text-center bg-gray-900 w-screen h-screen px-4 p-4 flex content-around flex-wrap select-none">
-        <div class="flex justify-around items-center w-full flex-wrap">
-            <h1 class="text-center font-light hidden sm:block text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
-            <div class="px-8" :class="currentTurnBorderAndTextColor">
-                <div class="my-1 text-gray-200">{{ turn }} team's hint</div>
-                <div class="text-2xl">
-                    <input class="p-2 text-gray-200 border-2 bg-transparent sm:text-gray-200" :class="currentTurnBorderAndTextColor" placeholder="word" type="text" v-model="hint"/>
-                    <input class="p-2 w-16 text-gray-200 border-2 bg-transparent sm:text-gray-200" :class="currentTurnBorderAndTextColor" type="number" placeholder="#" v-model="hintNum"/>
-                    <button class="text-white text-2xl py-2 px-4 border-2 sm:text-white" :class="[currentTurnColor, currentTurnBorderAndTextColor]" @click="setHint()"><i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-        </div>
+<body>
+    <div id="spymasterApp" class="relative font-thin text-center text-2xl w-screen h-screen flex content-around flex-wrap select-none">
+        <div class="flex justify-around items-center shadow-md lg:shadow-none bg-gray-200 lg:bg-white w-full flex-wrap" style="height:17vh;">
+			<h1 class="hidden lg:block text-center font-light text-6xl m-6 uppercase" :class="teamColor('text')">team {{ team }}</h1>
 
+			<div class="px-8" :class="currentTurnBorderAndTextColor">
+				<div class="hidden lg:block my-1 text-base text-gray-800">{{ turn }} team's hint</div>
+				<div class="text-xl">
+                    <input class="p-2 text-gray-200 border-2 bg-transparent lg:text-gray-200" :class="currentTurnBorderAndTextColor" placeholder="word" type="text" v-model="hint"/>
+                    <input class="p-2 w-16 text-gray-200 border-2 bg-transparent lg:text-gray-200" :class="currentTurnBorderAndTextColor" type="number" placeholder="#" v-model="hintNum"/>
+                    <button class="text-white text-2xl py-1 px-4 border-2 sm:text-white" :class="[currentTurnColor, currentTurnBorderAndTextColor]" @click="setHint()"><i class="fas fa-arrow-right"></i></button>
+				</div>
+			</div>
+		</div>
+		<div class="lg:shadow mx-auto py-1 lg:p-8 lg:bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
 
-
-        <div class="shadow mx-auto p-1 lg:p-8 bg-gray-200 lg:w-5/6 lg:mx-auto rounded">
+			<!-- This outer div is used to format the amount of cards to display in a row -->
             <div class="">
                 <div class="inline-block border m-1 py-2 lg:py-4 rounded w-1/6 shadow relative" :class="getCardColor(index)" v-for="(card, index) in words">
                     <div v-if="isCardTouched(index)">
@@ -36,33 +37,45 @@
                     <div v-else class="relative">
                         <p class="text-sm -mb-2 -mt-1 text-left mr-2 text-transparent" style="transform:rotate(-180deg);">{{ card }}</p> 
                         <p class="-my-2 text-transparent shadow-inner">{{ card }}</p> 
-                        <div class="absolute text-white font-bold text-xl bottom-0 mb-1 right-0 left-0 mx-auto">{{ card }}</div>
+                        <div class="absolute text-gray-100 font-bold text-xl bottom-0 mb-1 right-0 left-0 mx-auto">{{ card }}</div>
                     </div>
                 </div>
             </div>
         </div>
+
         
-        <div class="w-full text-xl flex justify-around">
-            <div>
-                <div class="inline-block bg-red-800 px-4 py-2 mr-2 text-white">
-                    Red cards left: {{ redCardsLeft }}
-                </div>
-                <div class="inline-block bg-blue-800 px-4 py-2 text-white">
-                    Blue cards left: {{ blueCardsLeft }}
-                </div>
-            </div>
-            <div>
-                <button class="cursor-pointer inline-block bg-gray-300 px-4 py-2 mr-2" @click="getNewGame()">New Game</button>
-                <!-- <div class="inline-block py-2 px-4 border-2" :class="currentTurnBorderAndTextColor">
-                    Timer: <span class="font-bold">24</span>
-                </div> -->
-            </div>
+        <!-- 
+        	Menu
+     	-->
+		<div class="absolute text-white text-3xl transition-all ease-in-out duration-150" :class="teamColor('bgLight')" :style="showNavBarVisibility" style="width:40vw; height:100vh; opacity:.93; ">
+			<div class="relative h-full  py-4">
+				<div class="absolute top-0 navbar-triangle justify-center " style="right:-4rem">
+					<div class="relative text-xl">
+						<i class="absolute left-0 -mt-2 p-2 fas fa-bars" style="top:-3.5rem;" @click="showNavBar = !showNavBar"></i>
+					</div>
+				</div>
+				<div class="">
+					Your team
+					<h1 class="text-5xl uppercase -mt-4">{{ team }}</h1>
+				</div>
+				<hr class="border-t mx-auto w-2/4 my-4">
+				<div class="">
+					Team guessing
+					<h1 class="text-5xl uppercase -mt-4">{{ turn }}</h1>
+				</div>
+				
+				<div class="text-lg absolute bottom-0 left-0 right-0 mx-auto mb-4">
+					<div class="inline-block bg-red-800 p-1 w-5/12">
+						Red cards left: {{ redCardsLeft }}
+					</div>
+					<div class="inline-block bg-blue-800 p-1 w-5/12">
+						Blue cards left: {{ blueCardsLeft }}
+					</div>
+				</div>
+			</div>
         </div>
-<!-- 
-        <div class="bg-gray-200 rounded text-sm px-3 py-1">First team: red</div>
-        <div class="w-full mt-2 flex justify-between text-sm">
-        </div> -->
         
+        <div class="fixed left-0 right-0 mx-auto rounded-lg text-white w-1/3 h-12 transition-all duration-150 ease-in-out flex justify-center items-center" :class="currentTurnColor" :style="toastStyling">{{ turn }} team's turn</div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
