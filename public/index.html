@@ -18,25 +18,40 @@
 
         .shake {
             animation-name: shake;
-            animation-duration: 6s;
-            animation-delay: 2s;
+            animation-duration: 5s;
+            animation-delay: 3s;
             animation-iteration-count: infinite;
         }
 
         @keyframes shake {
-            0%, 10%, 100% {
+
+            0%,
+            14%,
+            100% {
                 transform: rotate(0)
             }
+
             2% {
                 transform: rotate(-2deg);
             }
+
             4% {
                 transform: rotate(8deg)
             }
+
             6% {
                 transform: rotate(-8deg)
             }
+
             8% {
+                transform: rotate(4deg);
+            }
+
+            10% {
+                transform: rotate(-4deg);
+            }
+
+            12% {
                 transform: rotate(2deg)
             }
         }
@@ -46,11 +61,12 @@
 <body>
     <div id="indexApp" class="relative font-light text-center w-screen h-screen px-4 p-8 transition-colors duration-300"
         :class="teamColor">
-        <h1 class="text-5xl md:text-6xl text-white mb-10 sm:mb-20 mt-20 text-center mx-auto font-bold">CODENAMES</h1>
+        <h1 class="text-5xl md:text-6xl text-white mb-10 sm:mb-0 mt-20 sm:mt-0 text-center mx-auto font-bold">CODENAMES</h1>
+
 
         <div class="text-xl text-white">
             <h1 class="text-4xl my-2">Choose Team</h1>
-            <hr class="border-t  mb-6 w-10/12 sm:w-1/2 mx-auto">
+            <hr class="border-t  mb-6 sm:mb-3 w-10/12 sm:w-1/2 mx-auto">
             <button class="bg-blue-500 hover:bg-blue-600 rounded-full w-32 sm:w-40 py-3 mx-1 sm:mx-8"
                 @click="team = 'blue'">Blue</button>
             <button class="bg-red-500 hover:bg-red-600 rounded-full w-32 sm:w-40 py-3 mx-1 sm:mx-8"
@@ -58,22 +74,23 @@
         </div>
 
         <div v-if="team"
-            class="absolute bottom-0 right-0 left-0 mx-auto mb-8 sm:mb-20 text-2xl transition-all duration-100"
-            :class="{ 'mb-24': link }">
+            class="absolute bottom-0 right-0 left-0 mx-auto mb-8 text-2xl transition-all duration-100"
+            :class="{ 'mb-24 sm:mb-16': link }">
             <button :class="{'bg-gray-500': link == 'gameBoard.html'}"
-                class="w-10/12 sm:w-7/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow">
-                <div @click="link = 'gameBoard.html'" class="py-4 px-8 text-gray-900 hover:text-gray-600 ">Player</div>
+                class="w-10/12 sm:w-4/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow">
+                <div @click="link = 'gameBoard.html'" class="py-4 sm:py-2 px-8 text-gray-900 hover:text-gray-600 ">Player</div>
             </button>
             <button :class="{'bg-gray-500': link == 'spymasterBoard.html'}"
-                class="w-10/12 sm:w-7/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow-lg">
-                <div @click="link = 'spymasterBoard.html'" class="py-4 px-8 text-gray-900 hover:text-gray-600">Spymaster
+                class="w-10/12 sm:w-4/12 lg:w-64 rounded-full bg-gray-300 my-2 md:mx-2 shadow-lg">
+                <div @click="link = 'spymasterBoard.html'" class="py-4 sm:py-2 px-8 text-gray-900 hover:text-gray-600">Spymaster
                 </div>
             </button>
         </div>
 
+
         <transition name="slideUp">
             <button v-if="link" @click="goToPage()"
-                class="shadow-lg absolute bottom-0 right-0 left-0 mb-6 mx-auto w-11/12 sm:w-7/12 lg:w-64 rounded bg-green-500 text-white py-3 text-2xl transition-all duration-300 shake">Start
+                class="shadow-lg absolute bottom-0 right-0 left-0 mb-6 sm:mb-3 mx-auto w-11/12 sm:w-5/12 lg:w-64 rounded bg-green-500 text-white py-3 sm:py-2 text-2xl transition-all duration-300 shake">Start
                 Game</button>
         </transition>
     </div>
